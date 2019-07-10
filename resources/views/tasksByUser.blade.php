@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -11,35 +12,21 @@
             @endif
 
             <div class="card card-new-task">
-                <div class="card-header">Ajouter une tache</div>
+                <div class="card-header">Ressources</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('tasks.store') }}">
-                        @csrf
-                        <div class="form-group">
-                            <div class="">
-                                <label for="title">Titre</label>
-                                <input id="title" name="title" type="text" maxlength="255"
-                                    class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                    autocomplete="off" />
-                                @if ($errors->has('title'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('title') }}</strong>
-                                </span>
-                                @endif
-                            </div>
+                    @csrf
+                    <div class="form-group">
 
-                            <div class="">
-                                <label for="ressource">Ressources</label>
-                                <select name="ressource" id="" class="form-control">
-                                    @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="">
+                            <select name="ressource" id="ressource" class="form-control" onchange="getData()">
+                                @foreach ($users as $user)
+                                <option value="{{ $user->name }}">{{ $user->name }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -97,11 +84,27 @@
                         @endforeach
                     </table>
 
-                    {{ $tasks->links() }}
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+function getData() {
+    var res = $("#ressource").val();
+    $.ajax({
+        url: 'tasksByUser/' + res,
+        type: 'GET',
+        data: {
+            ressource: res
+        },
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
+</script>
+
 @endsection

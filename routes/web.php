@@ -20,8 +20,16 @@ Auth::routes();
 Route::middleware(['auth'])->group(function() {
     Route::resource('tasks', 'TaskController', [
         'only' => [
-            'index', 'store', 'update'
+            'index', 'store', 'update','destroy'
         ]
     ]);
+});
 
+Route::middleware(['auth'])->group(function() {
+    Route::resource('tasksByUser', 'TasksByUserController', [
+        'only' => [
+            'index',
+        ]
+    ]);
+    Route::get('tasksByUser/{id}','TasksByUserController@get_task');
 });
