@@ -31,5 +31,5 @@ Route::middleware(['auth'])->group(function() {
             'index',
         ]
     ]);
-    Route::get('tasksByUser/{id}','TasksByUserController@get_task');
+    Route::post('tasksByUser','TasksByUserController@get_task');
 });

@@ -28,7 +28,7 @@ class TasksByUserController extends Controller
        $users = User::orderBy('created_at', 'asc')->paginate(5);
         // return task index view with paginated tasks
         return view('tasksByUser', [
-            'tasks' => $tasks,'users'=>$users
+            'tasks' => $tasks,'users'=>$users,'ressource'=>null
         ]);
     }
     /**
@@ -43,10 +43,11 @@ class TasksByUserController extends Controller
        // $tasks = DB::table('tasks');
         $users = User::orderBy('created_at', 'asc')->paginate(5);
 
-        // return task index view with paginated tasks
+        //return task index view with paginated tasks
         return view('tasksByUser', [
-            'tasks' => $tasks,'users'=>$users
+            'tasks' => $tasks,'users'=>$users,'ressource'=>$request["ressource"]
         ]);
+        //return $tasks;
     }
 
 }
